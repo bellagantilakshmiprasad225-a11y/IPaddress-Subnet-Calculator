@@ -7,7 +7,9 @@ import {
   Sun, 
   ShieldCheck, 
   Terminal,
-  Activity
+  Activity,
+  LogOut,
+  UserRound
 } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
@@ -16,6 +18,8 @@ interface HeaderProps {
   onMobileMenuToggle: () => void;
   isDarkMode: boolean;
   onToggleTheme: () => void;
+  userEmail?: string;
+  onLogout?: () => void;
 }
 
 const VIEW_TITLES: Record<ActiveView, { title: string; subtitle: string }> = {
@@ -49,7 +53,9 @@ export const Header: React.FC<HeaderProps> = ({
   activeView,
   onMobileMenuToggle,
   isDarkMode,
-  onToggleTheme
+  onToggleTheme,
+  userEmail,
+  onLogout
 }) => {
   const currentInfo = VIEW_TITLES[activeView] || VIEW_TITLES.dashboard;
 
@@ -96,6 +102,25 @@ export const Header: React.FC<HeaderProps> = ({
           <Terminal className="w-3.5 h-3.5 text-cyan-400" />
           <span>IPv4 / CIDR</span>
         </div>
+
+        {userEmail ? (
+          <div className="hidden sm:flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-300">
+            <UserRound className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="max-w-[160px] truncate">{userEmail}</span>
+          </div>
+        ) : null}
+
+        {onLogout ? (
+          <button
+            onClick={onLogout}
+            className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-2.5 py-2 text-xs font-medium text-slate-200 transition hover:border-red-500/40 hover:text-red-200"
+            aria-label="Log out"
+            title="Log out"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
+        ) : null}
 
         {/* Theme Toggle Button */}
         <button

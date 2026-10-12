@@ -8,13 +8,17 @@ interface LayoutProps {
   activeView: ActiveView;
   onSelectView: (view: ActiveView) => void;
   historyCount?: number;
+  userEmail?: string;
+  onLogout?: () => void;
 }
 
 export const Layout: React.FC<LayoutProps> = ({
   children,
   activeView,
   onSelectView,
-  historyCount = 0
+  historyCount = 0,
+  userEmail,
+  onLogout
 }) => {
   const [isOpenMobile, setIsOpenMobile] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -37,6 +41,8 @@ export const Layout: React.FC<LayoutProps> = ({
           onMobileMenuToggle={() => setIsOpenMobile(!isOpenMobile)}
           isDarkMode={isDarkMode}
           onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+          userEmail={userEmail}
+          onLogout={onLogout}
         />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
